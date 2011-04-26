@@ -25,6 +25,7 @@
                  @"Google",                  
                  @"Apple", 
                  @"eBookFrenzy", 
+                 @"ElGee",
                  nil];      
     
     siteAddresses = [[NSArray alloc]
@@ -33,6 +34,7 @@
                      @"http:/www.google.com",
                      @"http://www.apple.com",
                      @"http://www.ebookfrenzy.com",
+                     @"http://www.backpicks.com",
                      nil];  
 }
 
