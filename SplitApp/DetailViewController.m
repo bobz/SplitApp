@@ -25,6 +25,9 @@
 
 @synthesize popoverController=_myPopoverController;
 
+@synthesize webView;
+
+
 #pragma mark - Managing the detail item
 
 /*
@@ -80,7 +83,7 @@
 
 - (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController: (UIPopoverController *)pc
 {
-    barButtonItem.title = @"Events";
+    barButtonItem.title = @"Favorite Web Sites";
     NSMutableArray *items = [[self.toolbar items] mutableCopy];
     [items insertObject:barButtonItem atIndex:0];
     [self.toolbar setItems:items animated:YES];

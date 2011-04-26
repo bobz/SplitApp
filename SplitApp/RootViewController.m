@@ -13,12 +13,27 @@
 @implementation RootViewController
 		
 @synthesize detailViewController;
+@synthesize siteNames, siteAddresses; 
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    self.clearsSelectionOnViewWillAppear = NO;
-    self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+- (void)viewDidLoad 
+{     [super viewDidLoad];     
+    self.clearsSelectionOnViewWillAppear = NO;     
+    self.contentSizeForViewInPopover =  CGSizeMake(320.0, 600.0);      
+    siteNames = [[NSArray alloc] 
+                 initWithObjects:
+                 @"Yahoo", 
+                 @"Google",                  
+                 @"Apple", 
+                 @"eBookFrenzy", 
+                 nil];      
+    
+    siteAddresses = [[NSArray alloc]
+                     initWithObjects:
+                     @"http://www.yahoo.com",
+                     @"http:/www.google.com",
+                     @"http://www.apple.com",
+                     @"http://www.ebookfrenzy.com",
+                     nil];  
 }
 
 		
@@ -55,23 +70,25 @@
 		
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 0;
+    return [siteNames count];
     		
 }
 
-		
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
 
-    // Configure the cell.
-    		
-    return cell;
+- (UITableViewCell *)tableView: (UITableView *)tableView  cellForRowAtIndexPath:(NSIndexPath *)indexPath 
+{     
+    static NSString *CellIdentifier = @"Cell";      
+    UITableViewCell *cell = [tableView         
+                             dequeueReusableCellWithIdentifier:CellIdentifier];     
+    if (cell == nil) 
+    {         
+        cell = [[[UITableViewCell alloc]            
+                 initWithStyle:UITableViewCellStyleDefault            
+                 reuseIdentifier:CellIdentifier] autorelease];     
+    }      
+    // Configure the cell.     
+    cell.textLabel.text = [siteNames objectAtIndex:indexPath.row];     
+    return cell; 
 }
 
 /*
@@ -105,17 +122,14 @@
 }
 */
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here -- for example, create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     NSManagedObject *selectedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     [detailViewController release];
-     */
+    NSString *urlString = [siteAddresses objectAtIndex:indexPath.row];
+    detailViewController.webView.scalesPageToFit = YES;
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [detailViewController.webView loadRequest:request];
 }
 
 - (void)didReceiveMemoryWarning
@@ -126,16 +140,21 @@
     // Relinquish ownership any cached data, images, etc that aren't in use.
 }
 
-- (void)viewDidUnload
-{
-    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
-    // For example: self.myOutlet = nil;
+
+- (void)viewDidUnload {     
+    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.     
+    // For example: self.myOutlet = nil;     
+    self.siteNames = nil;     
+    self.siteAddresses = nil; 
 }
 
-- (void)dealloc
-{
-    [detailViewController release];
-    [super dealloc];
-}
+- (void)dealloc 
+{     
+    [siteAddresses release];     
+    [siteNames release];     
+    [detailViewController release];     
+    [super dealloc]; 
+} 
+
 
 @end

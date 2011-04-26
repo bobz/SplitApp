@@ -11,9 +11,12 @@
 @class DetailViewController;
 
 @interface RootViewController : UITableViewController {
-
+    NSArray *siteNames;
+    NSArray *siteAddresses;
 }
 
+@property (nonatomic, retain) NSArray *siteNames; 
+@property (nonatomic, retain) NSArray *siteAddresses; 
 		
 @property (nonatomic, retain) IBOutlet DetailViewController *detailViewController;
 
